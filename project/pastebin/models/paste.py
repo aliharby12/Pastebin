@@ -30,7 +30,7 @@ class Paste(TimeStampedModel):
     def save(self, *args, **kwargs):
         if not self.name:
             self.name=get_random_string(5)
-        elif not self.slug:
+        if not self.slug:
             self.slug=get_random_string(8)
         super(Paste, self).save(*args, **kwargs)
 
