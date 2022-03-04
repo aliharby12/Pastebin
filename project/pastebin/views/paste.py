@@ -7,6 +7,19 @@ from project.pastebin.models import Paste
 from project.pastebin.utils import ErrorResponse, SuccessResponse
 
 
+class PasteListView(ListAPIView):
+    """
+    An end point to get all pastes
+    """
+    serializer_class = PasteSerializer
+    def get_queryset(self):
+        try:
+            queryset = Paste.objects.select_related('user')
+            return queryset
+        except:
+            return ErrorResponse._render(message='No active pastes!')
+
+
 class MyPasteListView(ListAPIView):
     """
     An end point to get all my pastes
@@ -26,7 +39,7 @@ class PasteDetailView(ListAPIView):
     """
     def get(self, request : Request, slug : str, format=None) -> Response:
         try:
-            paste = Paste.objects.get(slug=slug, user=request.user)
+            paste = Paste.objects.get(slug=slug)
             if paste.accessed >= 1 and paste.destroyable:
                 paste.delete()
             else:
