@@ -27,6 +27,11 @@ class PasteDetailView(ListAPIView):
     def get(self, request : Request, slug : str, format=None) -> Response:
         try:
             paste = Paste.objects.get(slug=slug, user=request.user)
+            if paste.accessed >= 1 and paste.destroyable:
+                paste.delete()
+            else:
+                paste.accessed += 1
+                paste.save()
             serializer = PasteSerializer(paste, context={"request": request})
             return SuccessResponse._render(serializer.data)
         except:
