@@ -22,7 +22,9 @@ import os
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pastes/', include('project.pastebin.routers.paste')) ,
+    path('pastes/', include('project.pastebin.routers.paste')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('auth/', include('project.pastebin.routers.auth')),
 ]
 
 if os.environ.get('DEBUG'):
