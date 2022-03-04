@@ -1,10 +1,10 @@
 from django.urls import path
 
-from project.pastebin.views import PasteStatisticsView
+from project.pastebin.views import UserStatisticsView
 
 
 urlpatterns = [
 
-    path('', PasteStatisticsView.as_view())
+    path('', UserStatisticsView.as_view())
 
 ]

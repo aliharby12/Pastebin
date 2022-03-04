@@ -6,7 +6,7 @@ from project.pastebin.serializers import UserSerializer
 from project.pastebin.utils import ErrorResponse
 
 
-class PasteStatisticsView(ListAPIView):
+class UserStatisticsView(ListAPIView):
     """
     An end point to get statistics
     """
