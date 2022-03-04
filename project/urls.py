@@ -25,6 +25,7 @@ urlpatterns = [
     path('pastes/', include('project.pastebin.routers.paste')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('auth/', include('project.pastebin.routers.auth')),
+    path('statistics/', include('project.pastebin.routers.statistics')),
 ]
 
 if os.environ.get('DEBUG'):

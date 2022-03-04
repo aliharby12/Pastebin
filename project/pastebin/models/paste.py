@@ -13,7 +13,7 @@ user = get_user_model()
 
 class Paste(TimeStampedModel):
     """database table for pastes"""
-    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    user = models.ForeignKey(user, on_delete=models.CASCADE, related_name='pastes')
     text = models.TextField(null=True, blank=True)
     text_file = models.FileField(
         upload_to=PathAndRename('pastes/files/'), null=True, blank=True,
