@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -18,6 +18,16 @@ class PasteListView(ListAPIView):
             return queryset
         except:
             return ErrorResponse._render(message='No active pastes!')
+
+
+class CreatePasteView(CreateAPIView):
+    """
+    An end point to create a paste
+    """
+    serializer_class = PasteSerializer
+    
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
 
 
 class MyPasteListView(ListAPIView):
