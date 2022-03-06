@@ -1,2 +1,2 @@
-from .admin import *
 from .paste import *
+from .user import *

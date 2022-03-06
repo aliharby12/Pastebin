@@ -2,6 +2,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser
 
 from project.pastebin.serializers import PasteSerializer
 from project.pastebin.models import Paste
@@ -15,7 +16,7 @@ class PasteListView(ListAPIView):
     serializer_class = PasteSerializer
     def get_queryset(self):
         try:
-            queryset = Paste.objects.select_related('user')
+            queryset = Paste.objects.select_related('user').order_by('id')
             return queryset
         except:
             return ErrorResponse._render(message='No active pastes!')
@@ -27,6 +28,7 @@ class CreatePasteView(CreateAPIView):
     """
     serializer_class = PasteSerializer
     permission_classes = (IsAuthenticated,)
+    parser_classes = [MultiPartParser]
     
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
@@ -56,11 +58,8 @@ class PasteDetailView(RetrieveAPIView):
     def get(self, request : Request, slug : str, format=None) -> Response:
         try:
             paste = Paste.objects.get(slug=slug)
-            if paste.accessed >= 1 and paste.destroyable:
-                paste.delete()
-            else:
-                paste.accessed += 1
-                paste.save()
+            paste.accessed += 1
+            paste.save()
             serializer = PasteSerializer(paste, context={"request": request})
             return SuccessResponse._render(serializer.data)
         except:

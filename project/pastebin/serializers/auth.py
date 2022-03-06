@@ -2,7 +2,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer,Token
 from rest_framework_simplejwt.state import token_backend
 from rest_framework_simplejwt.tokens import RefreshToken
 from typing import Any,Dict
-from django.contrib.auth import get_user_model
+from project.pastebin.models import User
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -21,7 +21,7 @@ class MyTokenRefreshSerializer(TokenRefreshSerializer):
         data = super().validate(attrs)
         decoded_payload = token_backend.decode(data['access'], verify=True)
         user_id=decoded_payload['user_id']
-        user = get_user_model().objects.get(id=user_id)
+        user = User.objects.get(id=user_id)
         refresh = RefreshToken.for_user(user)
         data['refresh'] = str(refresh)
         return data

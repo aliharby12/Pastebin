@@ -68,6 +68,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'project.urls'
 
+AUTH_USER_MODEL = 'pastebin.User'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -149,7 +151,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 1,
+    'PAGE_SIZE': 5,
 }
 
 SOCIALACCOUNT_PROVIDERS = {

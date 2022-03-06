@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -8,12 +7,10 @@ from project.pastebin.models.abstracts import TimeStampedModel
 from project.pastebin.utils import PathAndRename
 from .validator import validate_file_extension
 
-user = get_user_model()
-
 
 class Paste(TimeStampedModel):
     """database table for pastes"""
-    user = models.ForeignKey(user, on_delete=models.CASCADE, related_name='pastes')
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='pastes')
     text = models.TextField(null=True, blank=True)
     text_file = models.FileField(
         upload_to=PathAndRename('pastes/files/'), null=True, blank=True,
@@ -36,7 +33,7 @@ class Paste(TimeStampedModel):
 
 
 @receiver(post_save, sender=Paste)
-def retrieve_text(sender, **kwargs):
+def handle_paste(sender, **kwargs):
     paste = kwargs['instance']
     if paste.text_file:
         text_in_file = open(paste.text_file.path).read()
@@ -45,5 +42,7 @@ def retrieve_text(sender, **kwargs):
         else:
             paste.text = text_in_file
         paste.save()
+    elif paste.accessed >= 1 and paste.destroyable:
+        paste.delete()
     else:
         return

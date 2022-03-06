@@ -3,10 +3,7 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from project.pastebin.serializers import MyTokenObtainPairSerializer, MyTokenRefreshSerializer
-
-from project.pastebin.serializers import UserSerializer
-
+from project.pastebin.serializers import MyTokenObtainPairSerializer, MyTokenRefreshSerializer, UserSerializer
 
 class CreateUserView(CreateAPIView):
     """Create a new user in the system"""
