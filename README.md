@@ -31,4 +31,4 @@ this is a [Pastebin](https://pastebin.com/) clone where users can store plain te
 
 
 ## Admin Dashboard
-* To access Admin dashboard : `http://127.0.0.1:8000/admin` and the admin credentials are: `admin@admin.com`, `admin@1234`.
+* To access Admin dashboard : `http://127.0.0.1:8000/admin` and the admin credentials are: `admin`, `admin@1234`.
