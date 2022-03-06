@@ -23,8 +23,10 @@ this is a [Pastebin](https://pastebin.com/) clone where users can store plain te
 
 ## Access the endpoints from CLI
 * `docker-compose run web sh -c "python manage.py list_pastes"`, will list all pastes in the system.
-* `docker-compose run web sh -c "python manage.py access_list"`, will ask you to input the paste slug.
-* `docker-compose run web sh -c "python manage.py statistics"`, will shows statistics about the top 5 users (username and pastes count).
+* `docker-compose run web sh -c "python manage.py access_paste"`, will ask you to input the paste slug.
+* `docker-compose run web sh -c "python manage.py users-statistics"`, will shows statistics about the top 5 users (username and pastes 
+count).
+* `docker-compose run web sh -c "python manage.py countries-statistics"`, will shows statistics about the top 5 countries.
 
 ## Run Tests
 * To Run unit tests : `docker-compose run web sh -c "python manage.py test"`.
